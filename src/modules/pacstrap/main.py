@@ -107,24 +107,14 @@ def run():
     is_root_on_bcachefs = (curr_filesystem == "bcachefs\n")
 
     if bootloader == "grub":
-        base_packages += ["grub", "grub-hook", "cachyos-grub-theme", "os-prober"]
-    elif bootloader == "limine":
-        base_packages += ["limine", "limine-entry-tool"]
-    elif bootloader == "refind" or bootloader == "refind-ai":
-        base_packages += ["refind"]
+        base_packages += ["grub", "grub-hook", "os-prober"]
     elif bootloader == "systemd-boot":
         base_packages += ["systemd-boot-manager"]
 
-    if (is_root_on_zfs):
-        base_packages += ["zfs-utils", "linux-cachyos-zfs", "linux-cachyos-lts-zfs"]
-    elif is_root_on_btrfs:
+    if is_root_on_btrfs:
         libcalamares.utils.debug("Root on BTRFS")
-        if bootloader == "limine":
-            base_packages += ["snapper", "btrfs-assistant", "limine-snapper-sync" ]
-        elif bootloader == "grub":
+        if bootloader == "grub":
             base_packages += ["snapper", "btrfs-assistant", "grub-btrfs-support"]
-        elif bootloader == "refind" or bootloader == "refind-ai":
-            base_packages += ["snapper", "btrfs-assistant", "refind-btrfs" ]
 
     elif is_root_on_bcachefs:
         libcalamares.utils.debug("Root on BCACHEFS")
